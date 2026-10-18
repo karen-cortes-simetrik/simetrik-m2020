@@ -71,10 +71,10 @@ button{font:inherit;letter-spacing:inherit;color:inherit}
 .avatar{position:absolute;left:50%;top:-58px;width:116px;height:116px;transform:translateX(-50%);
   border-radius:50%;padding:4px;background:conic-gradient(from 210deg,#3838F9,#B048D6,#5759EE,#3838F9);
   box-shadow:0 14px 30px -10px rgba(56,56,249,.55)}
-.avatar img{width:100%;height:100%;border-radius:50%;object-fit:cover;border:3px solid var(--paper);background:var(--paper)}
+.avatar > img{width:100%;height:100%;border-radius:50%;object-fit:cover;border:3px solid var(--paper);background:var(--paper)}
 .avatar .badge{position:absolute;right:2px;bottom:4px;width:30px;height:30px;border-radius:50%;
   background:var(--ink);display:grid;place-items:center;border:3px solid var(--paper)}
-.avatar .badge img{width:14px;height:auto}
+.avatar .badge img{width:14px;height:auto;border:0;border-radius:0;background:none}
 .eyebrow{display:inline-flex;align-self:center;justify-self:center;align-items:center;gap:6px;
   font-size:11.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--blue);font-weight:500;
   background:var(--blue-tint);padding:5px 10px;border-radius:999px}
