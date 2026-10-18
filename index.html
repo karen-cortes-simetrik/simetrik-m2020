@@ -34,68 +34,119 @@ button{font:inherit;letter-spacing:inherit;color:inherit}
   padding-left:max(16px,env(safe-area-inset-left,0px));
   padding-right:max(16px,env(safe-area-inset-right,0px))}
 
-/* Top band */
-.band{background:var(--ink);color:var(--on-dark);
-  padding-top:env(safe-area-inset-top,0px)}
-.band .wrap{padding-block:18px 96px}
+/* Top band: brand black with the purple/blue light of the team headshots */
+.band{position:relative;overflow:hidden;color:var(--on-dark);background:var(--ink);
+  padding-top:env(safe-area-inset-top,0px);isolation:isolate}
+.band::before{content:"";position:absolute;inset:-20%;z-index:-2;
+  background:
+    radial-gradient(42% 60% at 88% 8%, rgba(56,56,249,.55), transparent 70%),
+    radial-gradient(38% 55% at 6% 92%, rgba(176,72,214,.42), transparent 70%),
+    radial-gradient(30% 40% at 55% 40%, rgba(87,89,238,.18), transparent 70%);
+  animation:drift 18s ease-in-out infinite alternate}
+.band::after{content:"";position:absolute;inset:0;z-index:-1;opacity:.35;
+  background-image:radial-gradient(rgba(255,255,255,.16) 1px, transparent 1px);
+  background-size:18px 18px;
+  -webkit-mask-image:linear-gradient(180deg,#000 0%,transparent 85%);mask-image:linear-gradient(180deg,#000 0%,transparent 85%)}
+.band .wrap{padding-block:18px 158px}
 .topline{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .brand{display:flex;align-items:center;gap:8px;font-size:20px;font-weight:500;
   text-decoration:none;letter-spacing:.4px}
 .brand svg{width:26px;height:26px}
-.event-chip{font-size:12px;letter-spacing:.6px;text-transform:uppercase;
-  border:1px solid #333;border-radius:999px;padding:5px 10px;color:var(--on-dark-muted);white-space:nowrap}
-.band h1{font-size:clamp(28px,8vw,38px);font-weight:500;line-height:1.05;
-  letter-spacing:.4px;margin:28px 0 6px;text-wrap:balance}
-.band p{margin:0;color:var(--on-dark-muted);font-size:15px}
+.event-chip{font-size:11.5px;letter-spacing:.7px;text-transform:uppercase;white-space:nowrap;
+  border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);border-radius:999px;
+  padding:6px 11px;color:#D6D6E8;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.band h1{font-size:clamp(30px,8.4vw,42px);font-weight:500;line-height:1.04;
+  letter-spacing:.4px;margin:30px 0 8px;text-wrap:balance}
+.band p{margin:0;color:var(--on-dark-muted);font-size:15px;display:flex;align-items:center;gap:8px}
+.band p::before{content:"";width:7px;height:7px;border-radius:50%;background:#3BE0A8;
+  box-shadow:0 0 0 4px rgba(59,224,168,.18)}
 
 /* Featured card */
-.feature{margin-top:-72px;background:var(--paper);border-radius:15px;overflow:hidden;
-  box-shadow:0 18px 50px -24px rgba(17,17,17,.45)}
-.feature .photo{aspect-ratio:1/1;max-height:min(70vw,360px);width:100%;object-fit:cover;object-position:50% 30%}
-.feature .body{padding:20px 20px 22px;display:grid;gap:16px}
-.eyebrow{font-size:12px;letter-spacing:.8px;text-transform:uppercase;color:var(--blue-soft);font-weight:500}
-.who h2{font-size:28px;font-weight:500;line-height:1.08;margin:6px 0 6px;letter-spacing:.4px}
-.who .role{color:var(--muted);font-size:15px;margin:0}
-.who .org{font-weight:500}
+.feature{position:relative;margin-top:-76px;background:var(--paper);border-radius:22px;
+  padding:72px 20px 20px;display:grid;gap:18px;text-align:center;
+  box-shadow:0 1px 0 rgba(255,255,255,.6) inset,0 1px 2px rgba(17,17,17,.06),
+    0 12px 24px -12px rgba(17,17,17,.18),0 40px 80px -32px rgba(40,30,120,.35)}
+.avatar{position:absolute;left:50%;top:-58px;width:116px;height:116px;transform:translateX(-50%);
+  border-radius:50%;padding:4px;background:conic-gradient(from 210deg,#3838F9,#B048D6,#5759EE,#3838F9);
+  box-shadow:0 14px 30px -10px rgba(56,56,249,.55)}
+.avatar img{width:100%;height:100%;border-radius:50%;object-fit:cover;border:3px solid var(--paper);background:var(--paper)}
+.avatar .badge{position:absolute;right:2px;bottom:4px;width:30px;height:30px;border-radius:50%;
+  background:var(--ink);display:grid;place-items:center;border:3px solid var(--paper)}
+.avatar .badge svg{width:15px;height:15px}
+.eyebrow{display:inline-flex;align-self:center;justify-self:center;align-items:center;gap:6px;
+  font-size:11.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--blue);font-weight:500;
+  background:var(--blue-tint);padding:5px 10px;border-radius:999px}
+.who h2{font-size:30px;font-weight:500;line-height:1.06;margin:12px 0 6px;letter-spacing:.4px;text-wrap:balance}
+.who .role{color:var(--muted);font-size:15px;margin:0;text-wrap:balance}
+.who .org{color:var(--ink);font-weight:500}
 
-.btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;
-  min-height:56px;border-radius:999px;border:0;cursor:pointer;text-decoration:none;
+.btn{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;gap:10px;width:100%;
+  min-height:58px;border-radius:999px;border:0;cursor:pointer;text-decoration:none;
   font-size:17px;font-weight:500;letter-spacing:.4px;
   transition:transform .15s var(--ease),background .2s var(--ease),box-shadow .2s var(--ease)}
 .btn:active{transform:scale(.98)}
-.btn-primary{background:var(--blue);color:#fff;box-shadow:0 10px 24px -12px rgba(56,56,249,.8)}
-.btn-primary:hover{background:#2a2ae6}
+.btn-primary{color:#fff;background:linear-gradient(180deg,#4A4AFB 0%,#3838F9 55%,#2E2EE8 100%);
+  box-shadow:0 1px 0 rgba(255,255,255,.25) inset,0 14px 28px -12px rgba(56,56,249,.85)}
+.btn-primary::after{content:"";position:absolute;top:0;bottom:0;width:40%;left:-60%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.28),transparent);
+  transform:skewX(-20deg);animation:shine 4.5s 1.2s ease-in-out infinite}
+.btn-primary:hover{box-shadow:0 1px 0 rgba(255,255,255,.25) inset,0 18px 34px -12px rgba(56,56,249,.95)}
 .btn-dark{background:var(--ink);color:#fff}
 .btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
-.btn small{display:block;font-size:12px;font-weight:400;opacity:.8;letter-spacing:.3px}
-.btn .stack{display:flex;flex-direction:column;align-items:flex-start;line-height:1.15}
+.btn small{display:block;font-size:12px;font-weight:400;opacity:.82;letter-spacing:.3px}
+.btn .stack{display:flex;flex-direction:column;align-items:flex-start;line-height:1.15;text-align:left}
 .btn svg{width:22px;height:22px;flex:none}
 
-.quick{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
-.quick a,.quick button{display:flex;flex-direction:column;align-items:center;gap:6px;
-  padding:12px 4px;border-radius:12px;background:var(--wash);border:0;cursor:pointer;
-  font-size:12px;line-height:1.15;text-align:center;text-decoration:none;color:var(--ink)}
-.quick svg{width:22px;height:22px;color:var(--blue)}
-.details{display:grid;gap:2px;font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
-.details span{overflow-wrap:anywhere}
+.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.quick a,.quick button{display:flex;flex-direction:column;align-items:center;gap:8px;
+  padding:14px 4px 12px;border-radius:16px;background:var(--paper);border:1px solid var(--soft-line);
+  cursor:pointer;font-size:12.5px;line-height:1.15;text-align:center;text-decoration:none;color:var(--ink);
+  box-shadow:0 1px 2px rgba(17,17,17,.04);transition:transform .18s var(--ease),box-shadow .18s var(--ease),border-color .18s}
+.quick a:hover,.quick button:hover{transform:translateY(-2px);border-color:#DCDCF6;box-shadow:0 10px 20px -12px rgba(40,30,120,.35)}
+.quick .ic{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--blue-tint);color:var(--blue)}
+.quick .ic svg{width:20px;height:20px}
+.quick .ic.wa{background:#E6F9EE;color:#1DA851}
+.quick .ic.li{background:#E8F1FB;color:#0A66C2}
+
+.details{display:grid;text-align:left;border-radius:16px;background:var(--wash);font-variant-numeric:tabular-nums}
+.detail{display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px;padding:12px 14px}
+.detail + .detail{border-top:1px solid var(--soft-line)}
+.detail .k{font-size:11.5px;letter-spacing:.6px;text-transform:uppercase;color:var(--muted)}
+.detail .v{font-size:15px;overflow-wrap:anywhere;min-width:0}
+.copy{border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:6px 12px;
+  font-size:12.5px;cursor:pointer;color:var(--ink)}
+.copy:hover{border-color:var(--blue-soft);color:var(--blue)}
 .share-row{display:flex;justify-content:center}
+.qr-btn{display:inline-flex;align-items:center;gap:8px;background:none;border:0;padding:6px 10px;
+  color:var(--blue-soft);cursor:pointer;font-size:14px}
+.qr-btn svg{width:18px;height:18px}
 .linkish{background:none;border:0;padding:6px 8px;color:var(--blue-soft);cursor:pointer;
   font-size:14px;text-decoration:underline;text-underline-offset:3px}
 
 /* Team list */
-.team{padding-block:28px 12px}
-.team h3{font-size:13px;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);
-  font-weight:500;margin:0 0 12px}
+.team{padding-block:34px 12px}
+.team h3{font-size:12px;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);
+  font-weight:500;margin:0 0 4px}
+.team .lede{margin:0 0 14px;font-size:14px;color:var(--muted)}
 .list{display:grid;gap:10px}
-.row{display:grid;grid-template-columns:56px 1fr auto;align-items:center;gap:12px;
-  background:var(--paper);border-radius:15px;padding:10px 12px 10px 10px}
-.row img{width:56px;height:56px;border-radius:50%;object-fit:cover}
-.row .txt{min-width:0}
-.row .nm{font-weight:500;font-size:16px}
+.row{display:grid;grid-template-columns:52px 1fr auto;align-items:center;gap:12px;cursor:pointer;
+  background:var(--paper);border-radius:18px;padding:10px 10px 10px 10px;border:1px solid transparent;
+  box-shadow:0 1px 2px rgba(17,17,17,.05),0 8px 20px -16px rgba(17,17,17,.25);
+  transition:transform .18s var(--ease),box-shadow .18s var(--ease),border-color .18s}
+.row:hover{transform:translateY(-1px);border-color:#E2E2F6;box-shadow:0 1px 2px rgba(17,17,17,.05),0 14px 26px -16px rgba(40,30,120,.4)}
+.row img{width:52px;height:52px;border-radius:50%;object-fit:cover;
+  box-shadow:0 0 0 2px var(--paper),0 0 0 3.5px #E3E3F7}
+.row .txt{min-width:0;text-align:left}
+.row .nm{font-weight:500;font-size:16px;display:flex;align-items:center;gap:6px}
+.row .nm svg{width:14px;height:14px;color:#B9B9C9;flex:none}
 .row .tt{font-size:13px;color:var(--muted);line-height:1.3}
 .row .save{border:0;border-radius:999px;background:var(--blue-tint);color:var(--blue);
-  font-weight:500;font-size:14px;padding:10px 14px;cursor:pointer;white-space:nowrap}
+  font-weight:500;font-size:14px;padding:10px 16px;cursor:pointer;white-space:nowrap}
 .row .save:hover{background:#e2e2fd}
+.swap{animation:swap .55s var(--ease) both}
+@keyframes swap{from{opacity:.001;transform:translate3d(0,18px,0) scale(.985)}to{opacity:1;transform:none}}
+@keyframes drift{from{transform:translate3d(0,0,0)}to{transform:translate3d(-4%,3%,0)}}
+@keyframes shine{0%,70%{left:-60%}100%{left:130%}}
 
 footer{padding-block:20px 40px;padding-bottom:calc(40px + env(safe-area-inset-bottom,0px));
   display:grid;gap:10px;justify-items:center;text-align:center;font-size:13px;color:var(--muted)}
@@ -169,7 +220,7 @@ footer a{color:var(--muted)}
 @keyframes spin{to{transform:rotate(360deg)}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}
   .burst path{stroke-dashoffset:0}}
-@media (min-width:600px){.band .wrap{padding-block:28px 110px}}
+@media (min-width:600px){.band .wrap{padding-block:28px 164px}}
 </style>
 </head>
 <body>
@@ -193,6 +244,7 @@ footer a{color:var(--muted)}
 
 <section class="team wrap fade-up d1" aria-labelledby="team-title">
   <h3 id="team-title">Also from Simetrik at Money20/20</h3>
+  <p class="lede">Tap anyone to see their card.</p>
   <div class="list" id="list"></div>
 </section>
 
@@ -224,7 +276,6 @@ footer a{color:var(--muted)}
   }
   var sharer = readSharer();
   var lead = sharer ? bySlug[sharer] : PEOPLE[0];
-  var others = PEOPLE.filter(function(p){ return p.slug !== lead.slug; });
 
   var ICON = {
     save:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5"/><path d="M19 8v6M16 11h6"/></svg>',
@@ -275,37 +326,66 @@ footer a{color:var(--muted)}
     sharer ? "Great to meet you." : "Meet the Simetrik team.";
 
   var feature = document.getElementById("feature");
-  feature.innerHTML =
-    '<img class="photo" src="' + photo(lead) + '" alt="' + esc(full(lead)) + '" width="480" height="480">' +
-    '<div class="body">' +
+  var current = lead;
+  var LOGO = '<svg viewBox="0 0 256 256" aria-hidden="true"><g fill="#fff"><rect x="23" y="26" width="210" height="92" rx="46" transform="rotate(-11 128 72)"/><rect x="23" y="138" width="210" height="92" rx="46" transform="rotate(-11 128 184)"/></g></svg>';
+  var CHEVRON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>';
+  function tile(tag, attrs, icon, cls, label){
+    return '<' + tag + ' ' + attrs + '><span class="ic' + (cls ? " " + cls : "") + '">' + icon + '</span>' + label + '</' + tag + '>';
+  }
+
+  function renderFeature(p){
+    current = p;
+    var fn = esc(firstName(p));
+    feature.innerHTML =
+      '<div class="avatar"><img src="' + photo(p) + '" alt="' + esc(full(p)) + '" width="480" height="480">' +
+        '<span class="badge" aria-hidden="true">' + LOGO + '</span></div>' +
       '<div class="who">' +
-        '<div class="eyebrow">' + (sharer ? "You scanned" : "Simetrik at Money20/20") + '</div>' +
-        '<h2>' + esc(full(lead)) + '</h2>' +
-        '<p class="role">' + esc(lead.title) + ' · <span class="org">Simetrik</span></p>' +
+        '<span class="eyebrow">' + (p.slug === sharer ? "You scanned" : "Simetrik team") + '</span>' +
+        '<h2>' + esc(full(p)) + '</h2>' +
+        '<p class="role">' + esc(p.title) + ' · <span class="org">Simetrik</span></p>' +
       '</div>' +
-      '<button class="btn btn-primary" type="button" data-save="' + lead.slug + '">' + ICON.save +
+      '<button class="btn btn-primary" type="button" data-save="' + p.slug + '">' + ICON.save +
         '<span class="stack">Save<small>Contact card + LinkedIn</small></span></button>' +
       '<div class="quick">' +
-        '<button type="button" data-add="' + lead.slug + '">' + ICON.save + 'Add contact</button>' +
-        '<a href="' + smsUrl(lead) + '" data-step="text" data-slug="' + lead.slug + '">' + ICON.sms + 'Text</a>' +
-        '<a href="tel:' + lead.phone + '">' + ICON.call + 'Call</a>' +
-        '<a href="mailto:' + lead.email + '">' + ICON.mail + 'Email</a>' +
-        '<a href="' + lead.linkedin + '" target="_blank" rel="noopener">' + ICON.li + 'LinkedIn</a>' +
+        tile("button", 'type="button" data-add="' + p.slug + '"', ICON.save, "", "Add contact") +
+        tile("a", 'href="' + waUrl(p) + '" target="_blank" rel="noopener"', ICON.wa, "wa", "WhatsApp") +
+        tile("a", 'href="' + smsUrl(p) + '"', ICON.sms, "", "Text") +
+        tile("a", 'href="tel:' + p.phone + '"', ICON.call, "", "Call") +
+        tile("a", 'href="mailto:' + p.email + '"', ICON.mail, "", "Email") +
+        tile("a", 'href="' + p.linkedin + '" target="_blank" rel="noopener"', ICON.li, "li", "LinkedIn") +
       '</div>' +
       '<div class="details">' +
-        '<span>' + esc(lead.phone_display) + '</span>' +
-        '<span>' + esc(lead.email) + '</span>' +
+        '<div class="detail"><div><div class="k">Mobile</div><div class="v">' + esc(p.phone_display) + '</div></div>' +
+          '<button class="copy" type="button" data-copy="' + esc(p.phone) + '">Copy</button></div>' +
+        '<div class="detail"><div><div class="k">Email</div><div class="v">' + esc(p.email) + '</div></div>' +
+          '<button class="copy" type="button" data-copy="' + esc(p.email) + '">Copy</button></div>' +
       '</div>' +
-      '<div class="share-row"><button class="linkish" type="button" data-qr="' + lead.slug + '">Show ' + esc(firstName(lead)) + '’s QR code</button></div>' +
-    '</div>';
+      '<div class="share-row"><button class="qr-btn" type="button" data-qr="' + p.slug + '">' + ICON.qr + 'Show ' + fn + '’s QR code</button></div>';
+    renderList();
+  }
 
-  document.getElementById("list").innerHTML = others.map(function(p){
-    return '<div class="row">' +
-      '<img src="' + photo(p) + '" alt="" width="56" height="56" loading="lazy">' +
-      '<div class="txt"><div class="nm">' + esc(full(p)) + '</div><div class="tt">' + esc(p.title) + '</div></div>' +
-      '<button class="save" type="button" data-save="' + p.slug + '" aria-label="Save ' + esc(full(p)) + '">Save</button>' +
-    '</div>';
-  }).join("");
+  function renderList(){
+    document.getElementById("list").innerHTML = PEOPLE.filter(function(p){
+      return p.slug !== current.slug;
+    }).map(function(p){
+      return '<div class="row" role="button" tabindex="0" data-open="' + p.slug + '" aria-label="Open ' + esc(full(p)) + '’s card">' +
+        '<img src="' + photo(p) + '" alt="" width="52" height="52" loading="lazy">' +
+        '<div class="txt"><div class="nm">' + esc(full(p)) + CHEVRON + '</div><div class="tt">' + esc(p.title) + '</div></div>' +
+        '<button class="save" type="button" data-save="' + p.slug + '" aria-label="Save ' + esc(full(p)) + '">Save</button>' +
+      '</div>';
+    }).join("");
+  }
+
+  // Tapping a teammate brings their card to the top.
+  function openCard(slug){
+    var p = bySlug[slug]; if (!p) return;
+    renderFeature(p);
+    feature.classList.remove("swap"); void feature.offsetWidth; feature.classList.add("swap");
+    var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({top: 0, behavior: reduce ? "auto" : "smooth"});
+  }
+
+  renderFeature(lead);
 
   /* ---------- Save flow (contact, then LinkedIn, then text) ---------- */
   var scrim = document.getElementById("scrim");
@@ -401,9 +481,11 @@ footer a{color:var(--muted)}
   window.addEventListener("pageshow", onReturn);
 
   document.addEventListener("click", function(e){
-    var t = e.target.closest("[data-save],[data-add],[data-close],[data-resave],[data-step],[data-qr]");
+    var t = e.target.closest("[data-save],[data-add],[data-copy],[data-close],[data-resave],[data-step],[data-qr],[data-open]");
     if (!t) return;
     if (t.hasAttribute("data-save")) { startSave(t.getAttribute("data-save")); return; }
+    if (t.hasAttribute("data-open")) { openCard(t.getAttribute("data-open")); return; }
+    if (t.hasAttribute("data-copy")) { copyText(t.getAttribute("data-copy"), t); return; }
     // Add contact: just the contact card, no LinkedIn or text steps.
     if (t.hasAttribute("data-add")) {
       var ap = bySlug[t.getAttribute("data-add")];
@@ -427,6 +509,8 @@ footer a{color:var(--muted)}
   });
   scrim.addEventListener("click", closeSheet);
   document.addEventListener("keydown", function(e){
+    var row = e.target.closest && e.target.closest("[data-open]");
+    if (row && e.target === row && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); openCard(row.getAttribute("data-open")); return; }
     if (e.key === "Escape") { if (!qrPanel.hidden) hideQR(); else if (flow) closeSheet(); }
   });
 
@@ -467,6 +551,12 @@ footer a{color:var(--muted)}
     toastEl.textContent = msg; toastEl.classList.add("show");
     clearTimeout(toastTimer);
     toastTimer = setTimeout(function(){ toastEl.classList.remove("show"); }, 2600);
+  }
+  function copyText(text, btn){
+    function done(){ btn.textContent = "Copied"; setTimeout(function(){ btn.textContent = "Copy"; }, 1600); }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function(){ toast(text); });
+    } else { toast(text); }
   }
   function hideQR(){ qrPanel.hidden = true; qrPanel.innerHTML = ""; }
 })();
