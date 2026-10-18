@@ -242,6 +242,24 @@ footer a{color:var(--muted)}
   function full(p){ return p.first + " " + p.last; }
   function firstName(p){ return p.first; }
   function vcfUrl(p){ return "vcf/" + p.slug + ".vcf"; }
+  var isAndroid = /Android/i.test(navigator.userAgent);
+  // Android: open the Contacts app's "Create contact" form already filled in,
+  // so nothing is downloaded. Falls back to the .vcf if no app takes the intent.
+  function androidInsertUrl(p){
+    var e = encodeURIComponent;
+    var abs = new URL(vcfUrl(p), location.href).href;
+    var notes = "LinkedIn: " + p.linkedin + "\nwww.simetrik.com\nMet at Money20/20 USA 2026, Las Vegas";
+    return "intent:#Intent;action=android.intent.action.INSERT;" +
+      "type=vnd.android.cursor.dir/raw_contact;" +
+      "S.name=" + e(full(p)) + ";" +
+      "S.phone=" + e(p.phone) + ";i.phone_type=2;" +
+      "S.email=" + e(p.email) + ";i.email_type=2;" +
+      "S.company=Simetrik;" +
+      "S.job_title=" + e(p.title) + ";" +
+      "S.notes=" + e(notes) + ";" +
+      "S.browser_fallback_url=" + e(abs) + ";end";
+  }
+  function saveUrl(p){ return isAndroid ? androidInsertUrl(p) : vcfUrl(p); }
   function photo(p){ return "img/" + p.slug + ".jpg"; }
   function msgBody(p){
     return "Hi " + firstName(p) + ", great meeting you at Money20/20! This is ";
@@ -311,7 +329,7 @@ footer a{color:var(--muted)}
 
     var steps =
       '<ol class="steps">' +
-        '<li class="' + stepClass("contact") + '"><span class="dot"><span>1</span></span><div><div class="lbl">Save contact</div><div class="sub">Phone, email, photo, LinkedIn</div></div></li>' +
+        '<li class="' + stepClass("contact") + '"><span class="dot"><span>1</span></span><div><div class="lbl">Save contact</div><div class="sub">' + (isAndroid ? 'Phone, email, title, LinkedIn' : 'Phone, email, photo, LinkedIn') + '</div></div></li>' +
         '<li class="' + stepClass("linkedin") + '"><span class="dot"><span>2</span></span><div><div class="lbl">Connect on LinkedIn</div><div class="sub">linkedin.com/in/' + esc(p.linkedin.split("/in/")[1].replace(/\/$/, "")) + '</div></div></li>' +
         '<li class="' + stepClass("text") + '"><span class="dot"><span>3</span></span><div><div class="lbl">Send ' + fn + ' a message</div><div class="sub">So ' + fn + ' has your number too</div></div></li>' +
       '</ol>';
@@ -321,7 +339,7 @@ footer a{color:var(--muted)}
       main =
         '<div class="waiting"><div class="spinner" aria-hidden="true"></div>' +
         '<div>Opening ' + fn + '’s contact card…</div>' +
-        '<p class="hint">Tap <b>Create New Contact</b> or <b>Save</b> on the next screen.</p></div>';
+        '<p class="hint">' + (isAndroid ? 'Tap <b>Save</b> on the next screen.' : 'Tap <b>Create New Contact</b> on the next screen.') + '</p></div>';
     } else if (flow.step === "linkedin") {
       main =
         '<div class="success"><div class="burst">' + ICON.check + '</div>' +
@@ -359,9 +377,9 @@ footer a{color:var(--muted)}
     var p = bySlug[slug]; if (!p) return;
     flow = {p: p, step: "saving", startedAt: Date.now()};
     renderSheet(); openSheet();
-    // Plain navigation (no download attribute): iOS opens the native
-    // "Create New Contact" sheet; Android hands the file to Contacts.
-    setTimeout(function(){ location.href = vcfUrl(p); }, 60);
+    // iPhone: plain navigation to the .vcf opens the native contact preview.
+    // Android: an intent opens the Contacts app's prefilled form (no file).
+    setTimeout(function(){ location.href = saveUrl(p); }, 60);
     clearTimeout(advanceTimer);
     // Move on when the visitor comes back from the contact screen, or after
     // a short pause on browsers that never leave the page.
@@ -386,7 +404,7 @@ footer a{color:var(--muted)}
     if (!t) return;
     if (t.hasAttribute("data-save")) { startSave(t.getAttribute("data-save")); return; }
     if (t.hasAttribute("data-close")) { closeSheet(); return; }
-    if (t.hasAttribute("data-resave")) { location.href = vcfUrl(flow.p); return; }
+    if (t.hasAttribute("data-resave")) { location.href = saveUrl(flow.p); return; }
     if (t.hasAttribute("data-qr")) { showQR(bySlug[t.getAttribute("data-qr")]); return; }
     if (t.hasAttribute("data-step") && flow) {
       // Let the link open, then show the next step when the visitor returns.
