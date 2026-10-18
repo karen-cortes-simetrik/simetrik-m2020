@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Simetrik at Money20/20</title>
+<meta name="description" content="Save the Simetrik team's contact cards from Money20/20 USA 2026.">
+<meta name="theme-color" content="#111111">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="fonts/simetrik-fonts.css">
+<style>
+/* Layout: phone-first single column. Dark brand band on top, the sharer's card
+   overlapping it, teammates listed below on the gray band. WEB mode tokens. */
+:root{
+  --ink:#111111; --paper:#FFFFFF; --wash:#F8F8F8;
+  --muted:#717171; --line:#DEDEDE; --soft-line:#ECECEC;
+  --blue:#3838F9; --blue-soft:#5759EE; --blue-tint:#EEEEFE;
+  --ok:#10B981; --ok-tint:#E7F8F1;
+  --on-dark:#FFFFFF; --on-dark-muted:#A8A8A8;
+  --font:'Aeonik',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --ease:cubic-bezier(.215,.61,.355,1);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--wash);color:var(--ink);font-family:var(--font);
+  font-size:16px;line-height:1.45;letter-spacing:.36px;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+button{font:inherit;letter-spacing:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.wrap{max-width:560px;margin:0 auto;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* Top band */
+.band{background:var(--ink);color:var(--on-dark);
+  padding-top:env(safe-area-inset-top,0px)}
+.band .wrap{padding-block:18px 96px}
+.topline{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:8px;font-size:20px;font-weight:500;
+  text-decoration:none;letter-spacing:.4px}
+.brand svg{width:26px;height:26px}
+.event-chip{font-size:12px;letter-spacing:.6px;text-transform:uppercase;
+  border:1px solid #333;border-radius:999px;padding:5px 10px;color:var(--on-dark-muted);white-space:nowrap}
+.band h1{font-size:clamp(28px,8vw,38px);font-weight:500;line-height:1.05;
+  letter-spacing:.4px;margin:28px 0 6px;text-wrap:balance}
+.band p{margin:0;color:var(--on-dark-muted);font-size:15px}
+
+/* Featured card */
+.feature{margin-top:-72px;background:var(--paper);border-radius:15px;overflow:hidden;
+  box-shadow:0 18px 50px -24px rgba(17,17,17,.45)}
+.feature .photo{aspect-ratio:1/1;max-height:min(70vw,360px);width:100%;object-fit:cover;object-position:50% 30%}
+.feature .body{padding:20px 20px 22px;display:grid;gap:16px}
+.eyebrow{font-size:12px;letter-spacing:.8px;text-transform:uppercase;color:var(--blue-soft);font-weight:500}
+.who h2{font-size:28px;font-weight:500;line-height:1.08;margin:6px 0 6px;letter-spacing:.4px}
+.who .role{color:var(--muted);font-size:15px;margin:0}
+.who .org{font-weight:500}
+
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;
+  min-height:56px;border-radius:999px;border:0;cursor:pointer;text-decoration:none;
+  font-size:17px;font-weight:500;letter-spacing:.4px;
+  transition:transform .15s var(--ease),background .2s var(--ease),box-shadow .2s var(--ease)}
+.btn:active{transform:scale(.98)}
+.btn-primary{background:var(--blue);color:#fff;box-shadow:0 10px 24px -12px rgba(56,56,249,.8)}
+.btn-primary:hover{background:#2a2ae6}
+.btn-dark{background:var(--ink);color:#fff}
+.btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn small{display:block;font-size:12px;font-weight:400;opacity:.8;letter-spacing:.3px}
+.btn .stack{display:flex;flex-direction:column;align-items:flex-start;line-height:1.15}
+.btn svg{width:22px;height:22px;flex:none}
+
+.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.quick a,.quick button{display:flex;flex-direction:column;align-items:center;gap:6px;
+  padding:12px 4px;border-radius:12px;background:var(--wash);border:0;cursor:pointer;
+  font-size:12.5px;text-decoration:none;color:var(--ink)}
+.quick svg{width:22px;height:22px;color:var(--blue)}
+.details{display:grid;gap:2px;font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
+.details span{overflow-wrap:anywhere}
+.share-row{display:flex;justify-content:center}
+.linkish{background:none;border:0;padding:6px 8px;color:var(--blue-soft);cursor:pointer;
+  font-size:14px;text-decoration:underline;text-underline-offset:3px}
+
+/* Team list */
+.team{padding-block:28px 12px}
+.team h3{font-size:13px;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);
+  font-weight:500;margin:0 0 12px}
+.list{display:grid;gap:10px}
+.row{display:grid;grid-template-columns:56px 1fr auto;align-items:center;gap:12px;
+  background:var(--paper);border-radius:15px;padding:10px 12px 10px 10px}
+.row img{width:56px;height:56px;border-radius:50%;object-fit:cover}
+.row .txt{min-width:0}
+.row .nm{font-weight:500;font-size:16px}
+.row .tt{font-size:13px;color:var(--muted);line-height:1.3}
+.row .save{border:0;border-radius:999px;background:var(--blue-tint);color:var(--blue);
+  font-weight:500;font-size:14px;padding:10px 14px;cursor:pointer;white-space:nowrap}
+.row .save:hover{background:#e2e2fd}
+
+footer{padding-block:20px 40px;padding-bottom:calc(40px + env(safe-area-inset-bottom,0px));
+  display:grid;gap:10px;justify-items:center;text-align:center;font-size:13px;color:var(--muted)}
+footer a{color:var(--muted)}
+
+/* Bottom sheet */
+.scrim{position:fixed;inset:0;background:rgba(17,17,17,.55);opacity:0;pointer-events:none;
+  transition:opacity .25s var(--ease);z-index:10}
+.scrim.open{opacity:1;pointer-events:auto}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:11;background:var(--paper);
+  border-radius:20px 20px 0 0;transform:translateY(105%);transition:transform .35s var(--ease);
+  padding-bottom:calc(20px + env(safe-area-inset-bottom,0px));max-height:92vh;overflow:auto}
+.sheet.open{transform:none}
+.sheet .wrap{padding-block:10px 0;display:grid;gap:18px}
+.grab{width:40px;height:4px;border-radius:4px;background:var(--line);margin:0 auto}
+.sheet-head{display:flex;align-items:center;gap:12px}
+.sheet-head img{width:48px;height:48px;border-radius:50%;object-fit:cover}
+.sheet-head .nm{font-weight:500;font-size:17px}
+.sheet-head .tt{font-size:13px;color:var(--muted)}
+.close{margin-left:auto;background:var(--wash);border:0;width:36px;height:36px;border-radius:50%;
+  cursor:pointer;font-size:20px;line-height:1}
+
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.step{display:grid;grid-template-columns:32px 1fr;gap:12px;align-items:center;
+  padding:12px;border-radius:12px;background:var(--wash);transition:background .3s var(--ease)}
+.step .dot{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;
+  background:var(--paper);border:1px solid var(--line);font-size:14px;font-variant-numeric:tabular-nums;color:var(--muted)}
+.step .lbl{font-weight:500}
+.step .sub{font-size:13px;color:var(--muted)}
+.step.active{background:var(--blue-tint)}
+.step.active .dot{border-color:var(--blue);color:var(--blue)}
+.step.done{background:var(--ok-tint)}
+.step.done .dot{background:var(--ok);border-color:var(--ok);color:#fff}
+.step.done .dot::before{content:"";width:12px;height:7px;border-left:2px solid #fff;border-bottom:2px solid #fff;
+  transform:translateY(-2px) rotate(-45deg)}
+.step.done .dot span{display:none}
+
+.success{display:grid;justify-items:center;gap:6px;text-align:center;padding-top:4px}
+.burst{width:64px;height:64px;border-radius:50%;background:var(--ok);display:grid;place-items:center;
+  animation:pop .5s var(--ease) both}
+.burst svg{width:30px;height:30px;color:#fff}
+.burst path{stroke-dasharray:30;stroke-dashoffset:30;animation:draw .45s .2s var(--ease) forwards}
+.success h4{margin:6px 0 0;font-size:22px;font-weight:500;letter-spacing:.4px}
+.success p{margin:0;color:var(--muted);font-size:14px;max-width:34ch}
+.actions{display:grid;gap:10px}
+.hint{font-size:13px;color:var(--muted);text-align:center;margin:0}
+.waiting{display:grid;justify-items:center;gap:10px;text-align:center;padding:8px 0}
+.spinner{width:36px;height:36px;border-radius:50%;border:3px solid var(--blue-tint);border-top-color:var(--blue);
+  animation:spin .8s linear infinite}
+
+/* QR overlay */
+.qr-panel{position:fixed;inset:0;z-index:20;background:var(--ink);color:#fff;display:grid;
+  place-items:center;padding:calc(24px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(24px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.qr-card{display:grid;gap:16px;justify-items:center;text-align:center;width:min(100%,380px)}
+.qr-box{background:#fff;border-radius:15px;padding:14px;width:100%}
+.qr-box svg,.qr-box img{width:100%;height:auto;display:block}
+.qr-card h2{margin:0;font-size:24px;font-weight:500}
+.qr-card p{margin:0;color:var(--on-dark-muted);font-size:14px}
+.qr-card .btn-ghost{color:#fff;border-color:#333}
+
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);
+  background:var(--ink);color:#fff;padding:10px 16px;border-radius:999px;font-size:14px;opacity:0;
+  transition:all .25s var(--ease);z-index:30;pointer-events:none}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+.fade-up{animation:fadeUp .8s var(--ease) both}
+.fade-up.d1{animation-delay:.12s}.fade-up.d2{animation-delay:.24s}
+@keyframes fadeUp{from{opacity:.001;transform:translate3d(0,24px,0)}to{opacity:1;transform:none}}
+@keyframes pop{0%{transform:scale(.4);opacity:0}70%{transform:scale(1.08);opacity:1}100%{transform:scale(1)}}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}
+  .burst path{stroke-dashoffset:0}}
+@media (min-width:600px){.band .wrap{padding-block:28px 110px}}
+</style>
+</head>
+<body>
+
+<header class="band">
+  <div class="wrap">
+    <div class="topline">
+      <a class="brand" href="https://www.simetrik.com" target="_blank" rel="noopener">
+        <svg viewBox="0 0 256 256" aria-hidden="true"><g fill="#3838F9"><rect x="23" y="26" width="210" height="92" rx="46" transform="rotate(-11 128 72)"/><rect x="23" y="138" width="210" height="92" rx="46" transform="rotate(-11 128 184)"/></g></svg>Simetrik
+      </a>
+      <span class="event-chip">Money20/20 USA 2026</span>
+    </div>
+    <h1 id="headline">Great to meet you.</h1>
+    <p>Las Vegas · Oct 18 to 21</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <article class="feature fade-up" id="feature" aria-live="polite"></article>
+</main>
+
+<section class="team wrap fade-up d1" aria-labelledby="team-title">
+  <h3 id="team-title">Also from Simetrik at Money20/20</h3>
+  <div class="list" id="list"></div>
+</section>
+
+<footer class="wrap fade-up d2">
+  <a href="vcf/simetrik-team.vcf" id="save-all">Save all 6 Simetrik contacts</a>
+  <a href="https://www.simetrik.com" target="_blank" rel="noopener">simetrik.com</a>
+</footer>
+
+<div class="scrim" id="scrim"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-name">
+  <div class="wrap" id="sheet-body"></div>
+</div>
+<div class="qr-panel" id="qr" hidden></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script src="people.js"></script>
+<script>
+(function(){
+  var PEOPLE = window.PEOPLE || [];
+  var bySlug = {};
+  PEOPLE.forEach(function(p){ bySlug[p.slug] = p; });
+
+  // Who shared the QR: ?p=karen (QR codes) or #karen (manual links).
+  function readSharer(){
+    var q = new URLSearchParams(location.search).get("p");
+    var h = location.hash.replace(/^#/, "");
+    var s = (q || h || "").toLowerCase();
+    return bySlug[s] ? s : null;
+  }
+  var sharer = readSharer();
+  var lead = sharer ? bySlug[sharer] : PEOPLE[0];
+  var others = PEOPLE.filter(function(p){ return p.slug !== lead.slug; });
+
+  var ICON = {
+    save:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5"/><path d="M19 8v6M16 11h6"/></svg>',
+    sms:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/></svg>',
+    call:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg>',
+    mail:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="m3 6 9 7 9-7"/></svg>',
+    li:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4V21H3zM9.5 9.5h3.8v1.6h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1V21h-4v-5.1c0-1.22-.02-2.79-1.7-2.79-1.7 0-1.96 1.33-1.96 2.7V21h-4z"/></svg>',
+    wa:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg>',
+    check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17l9-10"/></svg>',
+    qr:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 17h4v4h-4"/></svg>'
+  };
+
+  function esc(s){ return String(s).replace(/[&<>"']/g, function(c){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+  function full(p){ return p.first + " " + p.last; }
+  function firstName(p){ return p.first; }
+  function vcfUrl(p){ return "vcf/" + p.slug + ".vcf"; }
+  function photo(p){ return "img/" + p.slug + ".jpg"; }
+  function msgBody(p){
+    return "Hi " + firstName(p) + ", great meeting you at Money20/20! This is ";
+  }
+  // "?&body=" is accepted by both iOS Messages and Android.
+  function smsUrl(p){ return "sms:" + p.phone + "?&body=" + encodeURIComponent(msgBody(p)); }
+  function waUrl(p){ return "https://wa.me/" + p.phone.replace(/\D/g, "") + "?text=" + encodeURIComponent(msgBody(p)); }
+  function isUS(p){ return p.phone.indexOf("+1") === 0; }
+  function shareUrl(p){ return location.origin + location.pathname + "?p=" + p.slug; }
+
+  /* ---------- Render ---------- */
+  document.getElementById("headline").textContent =
+    sharer ? "Great to meet you." : "Meet the Simetrik team.";
+
+  var feature = document.getElementById("feature");
+  feature.innerHTML =
+    '<img class="photo" src="' + photo(lead) + '" alt="' + esc(full(lead)) + '" width="480" height="480">' +
+    '<div class="body">' +
+      '<div class="who">' +
+        '<div class="eyebrow">' + (sharer ? "You scanned" : "Simetrik at Money20/20") + '</div>' +
+        '<h2>' + esc(full(lead)) + '</h2>' +
+        '<p class="role">' + esc(lead.title) + ' · <span class="org">Simetrik</span></p>' +
+      '</div>' +
+      '<button class="btn btn-primary" type="button" data-save="' + lead.slug + '">' + ICON.save +
+        '<span class="stack">Save both<small>Contact card + LinkedIn</small></span></button>' +
+      '<div class="quick">' +
+        '<a href="' + smsUrl(lead) + '" data-step="text" data-slug="' + lead.slug + '">' + ICON.sms + 'Text</a>' +
+        '<a href="tel:' + lead.phone + '">' + ICON.call + 'Call</a>' +
+        '<a href="mailto:' + lead.email + '">' + ICON.mail + 'Email</a>' +
+        '<a href="' + lead.linkedin + '" target="_blank" rel="noopener">' + ICON.li + 'LinkedIn</a>' +
+      '</div>' +
+      '<div class="details">' +
+        '<span>' + esc(lead.phone_display) + '</span>' +
+        '<span>' + esc(lead.email) + '</span>' +
+      '</div>' +
+      '<div class="share-row"><button class="linkish" type="button" data-qr="' + lead.slug + '">Show ' + esc(firstName(lead)) + '’s QR code</button></div>' +
+    '</div>';
+
+  document.getElementById("list").innerHTML = others.map(function(p){
+    return '<div class="row">' +
+      '<img src="' + photo(p) + '" alt="" width="56" height="56" loading="lazy">' +
+      '<div class="txt"><div class="nm">' + esc(full(p)) + '</div><div class="tt">' + esc(p.title) + '</div></div>' +
+      '<button class="save" type="button" data-save="' + p.slug + '" aria-label="Save both for ' + esc(full(p)) + '">Save both</button>' +
+    '</div>';
+  }).join("");
+
+  /* ---------- Save both flow ---------- */
+  var scrim = document.getElementById("scrim");
+  var sheet = document.getElementById("sheet");
+  var body = document.getElementById("sheet-body");
+  var flow = null; // {p, step: "saving"|"linkedin"|"text"|"done", awaySince}
+
+  function stepClass(name){
+    var order = ["contact","linkedin","text"];
+    var cur = {saving:0, linkedin:1, text:2, done:3}[flow.step];
+    var i = order.indexOf(name);
+    return i < cur ? "step done" : (i === cur ? "step active" : "step");
+  }
+
+  function renderSheet(){
+    var p = flow.p, fn = esc(firstName(p));
+    var head =
+      '<div class="grab" aria-hidden="true"></div>' +
+      '<div class="sheet-head"><img src="' + photo(p) + '" alt="">' +
+        '<div><div class="nm" id="sheet-name">' + esc(full(p)) + '</div><div class="tt">' + esc(p.title) + ' · Simetrik</div></div>' +
+        '<button class="close" type="button" data-close aria-label="Close">×</button></div>';
+
+    var steps =
+      '<ol class="steps">' +
+        '<li class="' + stepClass("contact") + '"><span class="dot"><span>1</span></span><div><div class="lbl">Save contact</div><div class="sub">Phone, email, photo, LinkedIn</div></div></li>' +
+        '<li class="' + stepClass("linkedin") + '"><span class="dot"><span>2</span></span><div><div class="lbl">Connect on LinkedIn</div><div class="sub">linkedin.com/in/' + esc(p.linkedin.split("/in/")[1].replace(/\/$/, "")) + '</div></div></li>' +
+        '<li class="' + stepClass("text") + '"><span class="dot"><span>3</span></span><div><div class="lbl">Send ' + fn + ' a message</div><div class="sub">So ' + fn + ' has your number too</div></div></li>' +
+      '</ol>';
+
+    var main = "";
+    if (flow.step === "saving") {
+      main =
+        '<div class="waiting"><div class="spinner" aria-hidden="true"></div>' +
+        '<div>Opening ' + fn + '’s contact card…</div>' +
+        '<p class="hint">Tap <b>Create New Contact</b> or <b>Save</b> on the next screen.</p></div>';
+    } else if (flow.step === "linkedin") {
+      main =
+        '<div class="success"><div class="burst">' + ICON.check + '</div>' +
+        '<h4>Contact saved</h4><p>' + fn + ' is in your phone. One more tap to connect on LinkedIn.</p></div>' +
+        '<div class="actions">' +
+          '<a class="btn btn-primary" href="' + p.linkedin + '" target="_blank" rel="noopener" data-step="linkedin">' + ICON.li + 'Connect with ' + fn + ' on LinkedIn</a>' +
+          '<button class="linkish" type="button" data-resave>Didn’t see the contact screen? Save again</button>' +
+        '</div>';
+    } else if (flow.step === "text") {
+      main =
+        '<div class="success"><div class="burst">' + ICON.check + '</div>' +
+        '<h4>You’re connected</h4><p>Send ' + fn + ' a quick text so you have each other’s numbers.</p></div>' +
+        '<div class="actions">' +
+          (isUS(p)
+            ? '<a class="btn btn-primary" href="' + smsUrl(p) + '" data-step="text">' + ICON.sms + 'Text ' + fn + '</a>' +
+              '<a class="btn btn-ghost" href="' + waUrl(p) + '" target="_blank" rel="noopener" data-step="text">' + ICON.wa + 'WhatsApp instead</a>'
+            : '<a class="btn btn-primary" href="' + waUrl(p) + '" target="_blank" rel="noopener" data-step="text">' + ICON.wa + 'WhatsApp ' + fn + '</a>' +
+              '<a class="btn btn-ghost" href="' + smsUrl(p) + '" data-step="text">' + ICON.sms + 'Text message instead</a>') +
+          '<p class="hint">' + esc(p.phone_display) + '</p>' +
+        '</div>';
+    } else {
+      main =
+        '<div class="success"><div class="burst">' + ICON.check + '</div>' +
+        '<h4>All set</h4><p>Thanks for connecting with ' + fn + '. Talk soon.</p></div>' +
+        '<div class="actions"><button class="btn btn-dark" type="button" data-close>Done</button></div>';
+    }
+    body.innerHTML = head + steps + main;
+  }
+
+  function openSheet(){ scrim.classList.add("open"); sheet.classList.add("open"); }
+  function closeSheet(){ scrim.classList.remove("open"); sheet.classList.remove("open"); flow = null; }
+
+  var advanceTimer = null;
+  function startSave(slug){
+    var p = bySlug[slug]; if (!p) return;
+    flow = {p: p, step: "saving", startedAt: Date.now()};
+    renderSheet(); openSheet();
+    // Plain navigation (no download attribute): iOS opens the native
+    // "Create New Contact" sheet; Android hands the file to Contacts.
+    setTimeout(function(){ location.href = vcfUrl(p); }, 60);
+    clearTimeout(advanceTimer);
+    // Move on when the visitor comes back from the contact screen, or after
+    // a short pause on browsers that never leave the page.
+    advanceTimer = setTimeout(contactDone, 2200);
+  }
+  function contactDone(){
+    clearTimeout(advanceTimer);
+    if (flow && flow.step === "saving") { flow.step = "linkedin"; renderSheet(); }
+  }
+  function onReturn(){
+    if (document.visibilityState !== "visible" || !flow) return;
+    // Ignore the focus blip from the tap itself; only a real return counts.
+    if (flow.step === "saving") { if (Date.now() - flow.startedAt > 900) contactDone(); }
+    else if (flow.pending) { flow.step = flow.pending; flow.pending = null; renderSheet(); }
+  }
+  document.addEventListener("visibilitychange", onReturn);
+  window.addEventListener("focus", onReturn);
+  window.addEventListener("pageshow", onReturn);
+
+  document.addEventListener("click", function(e){
+    var t = e.target.closest("[data-save],[data-close],[data-resave],[data-step],[data-qr]");
+    if (!t) return;
+    if (t.hasAttribute("data-save")) { startSave(t.getAttribute("data-save")); return; }
+    if (t.hasAttribute("data-close")) { closeSheet(); return; }
+    if (t.hasAttribute("data-resave")) { location.href = vcfUrl(flow.p); return; }
+    if (t.hasAttribute("data-qr")) { showQR(bySlug[t.getAttribute("data-qr")]); return; }
+    if (t.hasAttribute("data-step") && flow) {
+      // Let the link open, then show the next step when the visitor returns.
+      var next = t.getAttribute("data-step") === "linkedin" ? "text" : "done";
+      flow.pending = next;
+      setTimeout(function(){
+        if (flow && flow.pending === next && document.visibilityState === "visible") {
+          flow.step = next; flow.pending = null; renderSheet();
+        }
+      }, 1500);
+    }
+  });
+  scrim.addEventListener("click", closeSheet);
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape") { if (!qrPanel.hidden) hideQR(); else if (flow) closeSheet(); }
+  });
+
+  /* ---------- QR (for teammates showing their code from a phone) ---------- */
+  var qrPanel = document.getElementById("qr");
+  var qrLib = null;
+  function loadQRLib(cb){
+    if (window.qrcode) return cb(true);
+    if (qrLib) return qrLib.push(cb);
+    qrLib = [cb];
+    var s = document.createElement("script");
+    s.src = "https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js";
+    s.onload = function(){ qrLib.forEach(function(f){ f(true); }); };
+    s.onerror = function(){ qrLib.forEach(function(f){ f(false); }); qrLib = null; };
+    document.head.appendChild(s);
+  }
+  function showQR(p){
+    var url = shareUrl(p);
+    qrPanel.innerHTML =
+      '<div class="qr-card"><h2>' + esc(full(p)) + '</h2>' +
+      '<p>Scan to save ' + esc(firstName(p)) + '’s contact</p>' +
+      '<div class="qr-box" id="qr-box"><img src="qr/' + p.slug + '.svg" alt="QR code for ' + esc(full(p)) + '"></div>' +
+      '<p style="overflow-wrap:anywhere">' + esc(url) + '</p>' +
+      '<button class="btn btn-ghost" type="button" id="qr-close">Close</button></div>';
+    qrPanel.hidden = false;
+    document.getElementById("qr-close").onclick = hideQR;
+    // Draw from the live address so the code always matches where the site is hosted.
+    loadQRLib(function(ok){
+      if (!ok || qrPanel.hidden) return;
+      var qr = window.qrcode(0, "Q"); qr.addData(url); qr.make();
+      document.getElementById("qr-box").innerHTML = qr.createSvgTag({cellSize: 8, margin: 2, scalable: true});
+    });
+  }
+  function hideQR(){ qrPanel.hidden = true; qrPanel.innerHTML = ""; }
+})();
+</script>
+</body>
+</html>
