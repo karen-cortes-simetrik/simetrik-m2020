@@ -422,17 +422,19 @@ footer a{color:var(--muted)}
     qrPanel.innerHTML =
       '<div class="qr-card"><h2>' + esc(full(p)) + '</h2>' +
       '<p>Scan to save ' + esc(firstName(p)) + '’s contact</p>' +
-      '<div class="qr-box" id="qr-box"><img src="qr/' + p.slug + '.svg" alt="QR code for ' + esc(full(p)) + '"></div>' +
+      '<div class="qr-box" id="qr-box"><img id="qr-img" src="qr/' + p.slug + '.png" alt="QR code for ' + esc(full(p)) + '"></div>' +
       '<p style="overflow-wrap:anywhere">' + esc(url) + '</p>' +
       '<button class="btn btn-ghost" type="button" id="qr-close">Close</button></div>';
     qrPanel.hidden = false;
     document.getElementById("qr-close").onclick = hideQR;
-    // Draw from the live address so the code always matches where the site is hosted.
-    loadQRLib(function(ok){
-      if (!ok || qrPanel.hidden) return;
-      var qr = window.qrcode(0, "Q"); qr.addData(url); qr.make();
-      document.getElementById("qr-box").innerHTML = qr.createSvgTag({cellSize: 8, margin: 2, scalable: true});
-    });
+    // The branded code is pre-built by build.py; draw a plain one only if it is missing.
+    document.getElementById("qr-img").onerror = function(){
+      loadQRLib(function(ok){
+        if (!ok || qrPanel.hidden) return;
+        var qr = window.qrcode(0, "Q"); qr.addData(url); qr.make();
+        document.getElementById("qr-box").innerHTML = qr.createSvgTag({cellSize: 8, margin: 2, scalable: true});
+      });
+    };
   }
   function hideQR(){ qrPanel.hidden = true; qrPanel.innerHTML = ""; }
 })();
