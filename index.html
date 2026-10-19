@@ -389,15 +389,15 @@ footer a{color:var(--muted)}
 
   renderFeature(lead);
 
-  /* ---------- Save flow (contact, then LinkedIn, then text) ---------- */
+  /* ---------- Save flow (contact, then text, then LinkedIn) ---------- */
   var scrim = document.getElementById("scrim");
   var sheet = document.getElementById("sheet");
   var body = document.getElementById("sheet-body");
-  var flow = null; // {p, step: "saving"|"linkedin"|"text"|"done", awaySince}
+  var flow = null; // {p, step: "saving"|"text"|"linkedin"|"done", awaySince}
 
   function stepClass(name){
-    var order = ["contact","linkedin","text"];
-    var cur = {saving:0, linkedin:1, text:2, done:3}[flow.step];
+    var order = ["contact","text","linkedin"];
+    var cur = {saving:0, text:1, linkedin:2, done:3}[flow.step];
     var i = order.indexOf(name);
     return i < cur ? "step done" : (i === cur ? "step active" : "step");
   }
@@ -413,8 +413,8 @@ footer a{color:var(--muted)}
     var steps =
       '<ol class="steps">' +
         '<li class="' + stepClass("contact") + '"><span class="dot"><span>1</span></span><div><div class="lbl">Save contact</div><div class="sub">' + (isAndroid ? 'Phone, email, title, LinkedIn' : 'Phone, email, photo, LinkedIn') + '</div></div></li>' +
-        '<li class="' + stepClass("linkedin") + '"><span class="dot"><span>2</span></span><div><div class="lbl">Connect on LinkedIn</div><div class="sub">linkedin.com/in/' + esc(p.linkedin.split("/in/")[1].replace(/\/$/, "")) + '</div></div></li>' +
-        '<li class="' + stepClass("text") + '"><span class="dot"><span>3</span></span><div><div class="lbl">Send ' + fn + ' a message</div><div class="sub">So ' + fn + ' has your number too</div></div></li>' +
+        '<li class="' + stepClass("text") + '"><span class="dot"><span>2</span></span><div><div class="lbl">Send ' + fn + ' a message</div><div class="sub">So ' + fn + ' has your number too</div></div></li>' +
+        '<li class="' + stepClass("linkedin") + '"><span class="dot"><span>3</span></span><div><div class="lbl">Connect on LinkedIn</div><div class="sub">linkedin.com/in/' + esc(p.linkedin.split("/in/")[1].replace(/\/$/, "")) + '</div></div></li>' +
       '</ol>';
 
     var main = "";
@@ -426,15 +426,14 @@ footer a{color:var(--muted)}
     } else if (flow.step === "linkedin") {
       main =
         '<div class="success"><div class="burst">' + ICON.check + '</div>' +
-        '<h4>Contact saved</h4><p>' + fn + ' is in your phone. One more tap to connect on LinkedIn.</p></div>' +
+        '<h4>One last step</h4><p>Connect with ' + fn + ' on LinkedIn.</p></div>' +
         '<div class="actions">' +
           '<a class="btn btn-primary" href="' + p.linkedin + '" target="_blank" rel="noopener" data-step="linkedin">' + ICON.li + 'Connect with ' + fn + ' on LinkedIn</a>' +
-          '<button class="linkish" type="button" data-resave>Didn’t see the contact screen? Save again</button>' +
         '</div>';
     } else if (flow.step === "text") {
       main =
         '<div class="success"><div class="burst">' + ICON.check + '</div>' +
-        '<h4>You’re connected</h4><p>Send ' + fn + ' a quick text so you have each other’s numbers.</p></div>' +
+        '<h4>Contact saved</h4><p>' + fn + ' is in your phone. Send a quick text so you have each other’s numbers.</p></div>' +
         '<div class="actions">' +
           (isUS(p)
             ? '<a class="btn btn-primary" href="' + smsUrl(p) + '" data-step="text">' + ICON.sms + 'Text ' + fn + '</a>' +
@@ -442,6 +441,7 @@ footer a{color:var(--muted)}
             : '<a class="btn btn-primary" href="' + waUrl(p) + '" target="_blank" rel="noopener" data-step="text">' + ICON.wa + 'WhatsApp ' + fn + '</a>' +
               '<a class="btn btn-ghost" href="' + smsUrl(p) + '" data-step="text">' + ICON.sms + 'Text message instead</a>') +
           '<p class="hint">' + esc(p.phone_display) + '</p>' +
+          '<button class="linkish" type="button" data-resave>Didn’t see the contact screen? Save again</button>' +
         '</div>';
     } else {
       main =
@@ -470,7 +470,7 @@ footer a{color:var(--muted)}
   }
   function contactDone(){
     clearTimeout(advanceTimer);
-    if (flow && flow.step === "saving") { flow.step = "linkedin"; renderSheet(); }
+    if (flow && flow.step === "saving") { flow.step = "text"; renderSheet(); }
   }
   function onReturn(){
     if (document.visibilityState !== "visible" || !flow) return;
@@ -500,7 +500,7 @@ footer a{color:var(--muted)}
     if (t.hasAttribute("data-qr")) { showQR(bySlug[t.getAttribute("data-qr")]); return; }
     if (t.hasAttribute("data-step") && flow) {
       // Let the link open, then show the next step when the visitor returns.
-      var next = t.getAttribute("data-step") === "linkedin" ? "text" : "done";
+      var next = t.getAttribute("data-step") === "text" ? "linkedin" : "done";
       flow.pending = next;
       setTimeout(function(){
         if (flow && flow.pending === next && document.visibilityState === "visible") {
